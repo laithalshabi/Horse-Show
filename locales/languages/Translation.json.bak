@@ -1,0 +1,15 @@
+{
+  "en": {
+    "appName": "Horse Show",
+    "Your_Horses": "Your Horses",
+    "Add_New_Horses": "Add New",
+	"Add_New_Horses": "Add New"
+	
+  },
+  "ar": {
+    "appName": "هورس شو",
+    "Your_Horses": "احصنتك!",
+    "Add_New_Horses": "أضف حصان جديد",
+
+  }
+}
