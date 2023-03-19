@@ -7,20 +7,26 @@ import {
 } from "react-native";
 import ButtonV2 from "../ui/ButtonV2";
 import { Ionicons } from "@expo/vector-icons";
+import { useLayoutEffect } from "react";
 
 
-function HorseShow(props) {
+function HorseShow({route,navigation}) {
   function remove(index){
     let m = index
     if (m == 0){
       m = 1
     }
-    props.horseArray.splice(index,m )
-    props.open(0)
+    route.params.horseArray.splice(index,m )
+    navigation.navigate("My Horses")
   }
+  function Edit(){
+    navigation.navigate('AddHorse',{isEdit:true,horseIndex: route.params.horseIndex})
+  }
+
   return (
+    
     <ImageBackground
-      source={props.horseSet.horsePicture}
+      source={route.params.horseSet.horsePicture}
       style={[styles.root, { width: "100%", height: "100%" }]}
       resizeMode="cover"
     >
@@ -28,9 +34,12 @@ function HorseShow(props) {
       <View style={[styles.nav ,{justifyContent:'center',marginHorizontal:20}]}>
         <View style={{ alignSelf:'flex-start' }}>
         <ButtonV2
-          title={props.i18n.t('arrow')}
+          title={route.params.i18n.t('arrow')}
+          color="#ffffff5b"
+          borderColor='black'
           textcolor="black"
-          onPress={props.open.bind(this, 0)}
+          radius={200}
+          onPress={()=>navigation.goBack()}
           size={15}
         />    
         </View>    
@@ -40,7 +49,7 @@ function HorseShow(props) {
         <ButtonV2
           title={<Ionicons name="trash-outline" color={'black'} size={15}></Ionicons>}
           textcolor="black"
-          onPress={remove.bind(this,props.horseIndex)}
+          onPress={remove.bind(this,route.params.horseIndex)}
           size={15}
         />
         </View>    
@@ -51,21 +60,21 @@ function HorseShow(props) {
         <View style={styles.infoWindow}>
           <View style={{ margin: 20 }}>
             <View style={{ flexDirection:'row' ,alignSelf:'flex-end',padding:0,margin:0 }}>
-          <ButtonV2 title={<Ionicons name="create-outline" color={'white'} size={20} />} borderColor='transparent' color='transparent' onPress={()=>{props.isEdit(true),props.open(2)}}/>
+          <ButtonV2 title={<Ionicons name="create-outline" color={'white'} size={20} />} borderColor='transparent' color='transparent' onPress={()=>Edit()}/>
           </View>
           <View style={{alignSelf:'flex-start',padding:0,margin:0 }}>
 
-            <Text style={styles.title}>{props.horseSet.horseName}</Text>
+            <Text style={styles.title}>{route.params.horseSet.horseName}</Text>
             <Text style={styles.text}>
-            {props.horseSet.horseInfo}
+            {route.params.horseSet.horseInfo}
             </Text>
-            <Text style={styles.text}>{props.i18n.t('DateOfBirth')}{props.horseSet.horseBirthDate}</Text>
-            <Text style={styles.price}>{props.i18n.t('Price')}{props.horseSet.horsePrice}</Text>
+            <Text style={styles.text}>{route.params.i18n.t('DateOfBirth')}{route.params.horseSet.horseBirthDate}</Text>
+            <Text style={styles.price}>{route.params.i18n.t('Price')}{route.params.horseSet.horsePrice}</Text>
           </View>
           <View style={{ flexDirection: "row", justifyContent: "center"}}>
             <ButtonV2
-              title={props.i18n.t('BuyNow')}
-              color="#580200"
+              title={route.params.i18n.t('BuyNow')}
+              color="#2B120E"
               highlight="rgba(5, 0, 0, 0.404)"
             />
           </View>

@@ -2,38 +2,33 @@ import { useState } from "react";
 import { StyleSheet, Text, View, Image, TextInput } from "react-native";
 import HorsesA from "../../assets/Data/HorsesA";
 import ButtonV2 from "../ui/ButtonV2";
+import { Dropdown } from "react-native-element-dropdown";
+import Auctions from "../../assets/Data/Auctions";
+import AntDesign from '@expo/vector-icons/AntDesign';
 
-function AddHorse({route,navigation}) {
+function AddAuction({route,navigation}) {
+function Data(label,value){
+  this.label = label;
+  this.value = value;
+}
+  let data = []
+  let Horses = route.params.horses.filter((x) => x.userId === route.params.loggedin.id);
+  Horses.forEach(element => {
+    data.push(new Data(element.horseName,element.id))
+  });
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+
   const [getName, setName] = useState("");
   const [getAbout, setAbout] = useState("");
   const [getPrice, setPrice] = useState("");
-  const [getBirth, setBirth] = useState("");
-  function HorseName(enteredText) {
-    setName(enteredText);
-  }
-  function HorseAbout(enteredText) {
-    setAbout(enteredText);
-  }
-  function HorsePrice(enteredText) {
-    setPrice(enteredText);
-  }
-  function HorseBirth(enteredText) {
-    setBirth(enteredText);
-  }
-  function AddHorse() {
-    if (route.params.isEdit) {
-      route.params.horseUpdate[route.params.horseIndex].horseName= getName;
-      route.params.horseUpdate[route.params.horseIndex].horseBirthDate= getBirth;
-      route.params.horseUpdate[route.params.horseIndex].horseInfo= getAbout;
-      route.params.horseUpdate[route.params.horseIndex].horsePrice= getPrice;
-    } else {
-
-      route.params.horseUpdate.push(
-          new HorsesA(route.params.horseUpdate.length, getName, getPrice, "asd", getAbout, getBirth,route.params.loggedin.id)
+  const [startdate, setStartdate] = useState("");
+  const [enddate, setEnddate] = useState("");
+  function AddNewAuction() {
+      route.params.auctions.push(
+          new Auctions(route.params.auctions.length,getName,getAbout,getPrice,startdate,enddate,route.params.loggedin.id,value)
       );
-    }
-    navigation.navigate("My Horses")
-
+      navigation.navigate('My Auctions')
   }
   return (
     <View style={styles.root}>
@@ -96,32 +91,50 @@ function AddHorse({route,navigation}) {
                 marginVertical: 30,
               }}
             >
-              {route.params.i18n.t('AddNewHorse')}
+              {route.params.i18n.t('AddNewAuction')}
             </Text>
+          <Dropdown
+        style={styles.textInput}
+        data={data}
+        maxHeight={300}
+        labelField="label"
+        valueField="value"
+        placeholder={route.params.i18n.t("Select Horse")}
+        value={value}
+        onChange={item => {
+          setValue(item.value);
+        }}
+      />
             <TextInput
               style={[styles.textInput]}
               placeholder={route.params.i18n.t('Name')}
               placeholderTextColor={"gray"}
-              onChangeText={HorseName}
+              onChangeText={(enteredText)=>setName(enteredText)}
             />
             <TextInput
               style={[styles.textInput, { paddingVertical: 40 }]}
               multiline={true}
               placeholder={route.params.i18n.t('About')}
               placeholderTextColor={"gray"}
-              onChangeText={HorseAbout}
+              onChangeText={(enteredText)=>setAbout(enteredText)}
             />
             <TextInput
               style={[styles.textInput]}
               placeholder={route.params.i18n.t('PriceN')}
               placeholderTextColor={"gray"}
-              onChangeText={HorsePrice}
+              onChangeText={(enteredText)=>setPrice(enteredText)}
             />
             <TextInput
               style={[styles.textInput]}
-              placeholder={route.params.i18n.t('BirthDate')}
+              placeholder={route.params.i18n.t('StartDate')}
               placeholderTextColor={"gray"}
-              onChangeText={HorseBirth}
+              onChangeText={(enteredText)=>setStartdate(enteredText)}
+            />
+            <TextInput
+              style={[styles.textInput]}
+              placeholder={route.params.i18n.t('EndDate')}
+              placeholderTextColor={"gray"}
+              onChangeText={(enteredText)=>setEnddate(enteredText)}
             />
             <View style={{ marginTop: 50, marginBottom: 30 }}>
               <ButtonV2
@@ -129,7 +142,7 @@ function AddHorse({route,navigation}) {
                 color="#2B120E"
                 textcolor="white"
                 bordercolor="black"
-                onPress={AddHorse}
+                onPress={AddNewAuction}
                 size={10}
                 radius={8}
               />
@@ -141,7 +154,7 @@ function AddHorse({route,navigation}) {
   );
 }
 
-export default AddHorse;
+export default AddAuction;
 
 const styles = StyleSheet.create({
   root: {

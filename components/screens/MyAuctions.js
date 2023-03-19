@@ -5,60 +5,81 @@ import ButtonV2 from "../ui/ButtonV2";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native";
 import { ScrollView } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import Card from "../ui/Card";
-function Horses({route, navigation}) {
+import {Ionicons} from "@expo/vector-icons"
+function MyAuctions({route, navigation}) {
   let i18n = route.params.i18n
 
   function pressHandler(a,b){
     navigation.navigate('HorseShow',{horseIndex:a,horseSet:b});
 }
-let Horses = route.params.horses.filter((x) => x.userId === route.params.loggedin.id);
-
-
+let myAuctions = route.params.auctions.filter(
+  (x) => x.userid === route.params.loggedin.id
+);
   return (
     <View style={styles.root}>
         <FlatList
-          data={Horses}
+          data={myAuctions}
           renderItem={(itemData) => {
+          let Horse = route.params.horses[itemData.item.horseid] 
+
             return (
-              <View style={styles.card}>
-                <ImageBackground
-                  source={itemData.item.horsePicture}
-                  style={[styles.cardHeader, { width: "100%" }]}
+              <Pressable
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                marginVertical: 12,
+              }}
+              onPress={()=>navigation.navigate('DiscoverShow',{itemData:itemData,itemHorse:Horse})}
+            >
+              <View
+                style={{ width: "70%", backgroundColor: "black", elevation: 4 }}
+              >
+                <Image
+                  style={{ width: "100%", height: 160, opacity: 0.8 }}
                   resizeMode="cover"
+                  source={Horse.horsePicture}
+                />
+                <View
+                  style={{
+                    backgroundColor: "#FFD288",
+                    height: 120,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
-                  <View style={{ backgroundColor:'rgba(0,0,0,0.3)', flex:1,justifyContent:'flex-end' }}>
-                  <View
-                    style={[
-                      styles.idk,
-                      { width: "100%", flexDirection: "row" },
-                    ]}
+                  <Text
+                    style={{
+                      width: "70%",
+                      borderBottomWidth: 1,
+                      textAlign: "center",
+                      fontWeight: "bold",
+                    }}
                   >
-                    <View>
-                      <Text style={[styles.cardText, { textAlign: "left" }]}>
-                        {itemData.item.horseName}
-                      </Text>
-                      <Text style={[styles.cardText, { textAlign: "left" }]}>
-                        {itemData.item.horsePrice}
-                      </Text>
-                    </View>
-                    <View style={{ flex: 1 }}></View>
-                    <ButtonV2
-                      title={i18n.t('arrowB')}
-                      color="rgba(88, 88, 88, 0.993), 0.5)"
-                      textcolor="white"
-                      bordercolor="black"
-                      onPress={pressHandler.bind(this,itemData.index,itemData.item)}
-                      highlight="rgba(0, 0, 0, 0.301)"
-                    />
-                  </View>
-                  </View>
-                </ImageBackground>
+                    {route.params.i18n.t("ORGANIZED BY")}
+                  </Text>
+                  <Text
+                    style={{ width: "70%", textAlign: "center", marginTop: 2 }}
+                  >
+                    {itemData.item.name}
+                  </Text>
+                  <Text
+                    style={{ width: "70%", textAlign: "center", marginTop: 5 }}
+                  >
+                    {route.params.i18n.t("Starts on")}{itemData.item.startdate}
+                  </Text>
+                  <Text
+                    style={{ width: "70%", textAlign: "center", marginTop: 2 }}
+                  >
+                    {route.params.i18n.t("Ends on")}{itemData.item.enddate}
+                  </Text>
+                </View>
               </View>
+            </Pressable>
             );
           }}
-          keyExtractor={(item) => item.horseName + Math.random()}
+          keyExtractor={(item) => item.name + Math.random()}
           ListHeaderComponent={() => (
             <View style={styles.container}>
               <View style={styles.nav}>
@@ -105,14 +126,14 @@ let Horses = route.params.horses.filter((x) => x.userId === route.params.loggedi
                   }}
                 >
                   <Text style={[styles.titleText, {}]}>
-                    {i18n.t('Your_Horses')}
+                    {i18n.t('MyAuctions')}
                   </Text>
                   <ButtonV2
                     title={<Ionicons size={20} name="add-outline" />}
                     color="#2B120E"
                     textcolor="white"
                     bordercolor="black"
-                    onPress={()=>{navigation.navigate('AddHorse',{isEdit:false,loggedin:route.params.loggedin})}}
+                    onPress={()=>navigation.navigate('AddAuctions',{loggedin:route.params.loggedin,})}
                     radius={20}
                   />
                 </View>
@@ -124,7 +145,7 @@ let Horses = route.params.horses.filter((x) => x.userId === route.params.loggedi
   );
 }
 
-export default Horses;
+export default MyAuctions;
 
 const styles = StyleSheet.create({
   root: {

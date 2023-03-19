@@ -8,23 +8,32 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ry0o0n.HorseShow"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ry0o0n.HorseShow"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "updates": {
+      "enabled": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "30a72038-85ce-43d2-9428-3524f34752af"
+      }
     }
   }
 }
