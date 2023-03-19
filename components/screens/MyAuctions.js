@@ -67,12 +67,12 @@ let myAuctions = route.params.auctions.filter(
                   <Text
                     style={{ width: "70%", textAlign: "center", marginTop: 5 }}
                   >
-                    {route.params.i18n.t("Starts on")}{itemData.item.startdate}
+                    {route.params.i18n.t("Starts on")}{itemData.item.startdate.toString()}
                   </Text>
                   <Text
                     style={{ width: "70%", textAlign: "center", marginTop: 2 }}
                   >
-                    {route.params.i18n.t("Ends on")}{itemData.item.enddate}
+                    {route.params.i18n.t("Ends on")}{itemData.item.enddate.toString()}
                   </Text>
                 </View>
               </View>

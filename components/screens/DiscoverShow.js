@@ -63,10 +63,10 @@ function DiscoverShow({ route, navigation }) {
           {route.params.itemData.item.name}
         </Text>
         <Text style={{ width: "70%", textAlign: "center", marginTop: 20,fontWeight: "bold" }}>
-          Starts on:    {route.params.itemData.item.startdate}
+          Starts on:    {route.params.itemData.item.startdate.toString()}
         </Text>
         <Text style={{ width: "70%", textAlign: "center", marginTop: 10,fontWeight: "bold" }}>
-          Ends on:    {route.params.itemData.item.enddate}
+          Ends on:    {route.params.itemData.item.enddate.toString()}
         </Text>
         <Text style={{ width: "70%", marginTop: 20 }}>
           {route.params.itemData.item.about}

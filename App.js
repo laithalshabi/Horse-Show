@@ -41,10 +41,10 @@ users.push(
 
 let auctions = [];
 auctions.push(
-  new Auctions(auctions.length,'test','test about','$20m','4/3/2022 4:00 PM','4/5/2022 4:00 PM',0,0)
+  new Auctions(auctions.length,'test','test about','$20m',new Date('2023-03-12T02:10:13.811Z'),new Date('2023-03-31T02:10:13.811Z'),1708481269.673,0,0)
 );
 auctions.push(
-  new Auctions(auctions.length,'test','test about','$20m','4/3/2022 4:00 PM','4/5/2022 4:00 PM',1,3)
+  new Auctions(auctions.length,'test','test about','$20m',new Date('2023-03-12T02:10:13.811Z'),new Date('2023-03-31T02:10:13.811Z'),1708481269.673,1,3)
 );
 
 let getHorses = [];

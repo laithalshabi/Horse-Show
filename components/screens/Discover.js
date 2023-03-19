@@ -20,15 +20,15 @@ function Discover({ route, navigation }) {
   function pressHandler(a, b) {
     //navigation.navigate('HorseShow',{horseIndex:a,horseSet:b});
   }
-  
+  let SortedList = route.params.auctions.sort(function(x, y){
+    return y.timestamp - x.timestamp;
+}).reverse()
   return (
     <View style={styles.root}>
       <FlatList
-        data={route.params.auctions}
+        data={SortedList}
         renderItem={(itemData) => {
           let Horse = route.params.horses[itemData.item.horseid] 
-          let enddate = new Date(2022, 2 - 1, 5, 24, 25, 10)
-          let timeStamp =  enddate.getTime() / 1000;
           return (
             <Pressable
               style={{
@@ -73,12 +73,12 @@ function Discover({ route, navigation }) {
                   <Text
                     style={{ width: "70%", textAlign: "center", marginTop: 5 }}
                   >
-                    {route.params.i18n.t("Starts on")}{itemData.item.startdate}
+                    {route.params.i18n.t("Starts on")}{itemData.item.startdate.toString()}
                   </Text>
                   <Text
                     style={{ width: "70%", textAlign: "center", marginTop: 2 }}
                   >
-                    {route.params.i18n.t("Ends on")}{itemData.item.enddate}
+                    {route.params.i18n.t("Ends on")}{itemData.item.enddate.toString()}
                   </Text>
                 </View>
               </View>
